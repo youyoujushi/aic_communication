@@ -28,8 +28,8 @@ public:
 
   virtual bool run() override;
   virtual bool close() override;
-  virtual void setStatusCall(StatusCall func) override;
-  virtual void setDiscardPacketBeforeConntect(bool param) override;
+  // virtual void setStatusCall(StatusCall func) override;
+  // virtual void setDiscardPacketBeforeConntect(bool param) override;
 
 private:
   void createLoop();

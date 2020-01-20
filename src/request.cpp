@@ -112,7 +112,7 @@ bool AicCommuRequest::close()
     if (is_loop_exit_ && is_monitor_exit_)
       break;
     wait_send_queue_.broadcast();
-    SLEEP(100);
+    SLEEP(1);
   }
 
   socket_.close();
@@ -127,51 +127,51 @@ bool AicCommuRequest::close()
  * @param func
  * @return
  */
-void AicCommuRequest::setStatusCall(StatusCall func){
-    if(func == nullptr){
-        status_call_ = nullptr;
-    }else{
-        status_call_ = [func,this](AicCommuStatus status, const std::string &msg){
-            if(status == AicCommuStatus::CONNECTED){
-                this->is_connected_ = true;
-//                if(is_timeout_){    //由超时引起的重新连接不再通知调用者
-//                    is_timeout_ = false;
-//                    return;
-//                }
-            }else if(status == AicCommuStatus::DISCONNECTED ){
-                this->is_connected_ = false;
-                if(is_timeout_ && disconnect_after_timeout_){    //由超时重连引起的连接断开不再通知调用者
-                    disconnect_after_timeout_ = false;
-                    return;
-                }
-            }else if(status == AicCommuStatus::TIMEOUT){
-                is_timeout_ = true;
-                disconnect_after_timeout_ = true;
-            }
+// void AicCommuRequest::setStatusCall(StatusCall func){
+//     if(func == nullptr){
+//         status_call_ = nullptr;
+//     }else{
+//         status_call_ = [func,this](AicCommuStatus status, const std::string &msg){
+//             if(status == AicCommuStatus::CONNECTED){
+//                 this->is_connected_ = true;
+// //                if(is_timeout_){    //由超时引起的重新连接不再通知调用者
+// //                    is_timeout_ = false;
+// //                    return;
+// //                }
+//             }else if(status == AicCommuStatus::DISCONNECTED ){
+//                 this->is_connected_ = false;
+//                 if(is_timeout_ && disconnect_after_timeout_){    //由超时重连引起的连接断开不再通知调用者
+//                     disconnect_after_timeout_ = false;
+//                     return;
+//                 }
+//             }else if(status == AicCommuStatus::TIMEOUT){
+//                 is_timeout_ = true;
+//                 disconnect_after_timeout_ = true;
+//             }
 
-            if(is_stoped_){ //对象將要释放时，忽略掉任何通知
-                return;
-            }
+//             if(is_stoped_){ //对象將要释放时，忽略掉任何通知
+//                 return;
+//             }
 
-            func(status,msg);
-        };
-    }
-}
+//             func(status,msg);
+//         };
+//     }
+// }
 
-void AicCommuRequest::setDiscardPacketBeforeConntect(bool param)
-{
-    discard_packet_before_connect_ = param;
-}
+// void AicCommuRequest::setDiscardPacketBeforeConntect(bool param)
+// {
+//     discard_packet_before_connect_ = param;
+// }
 
 bool AicCommuRequest::send(bytes_ptr buffer, RecvCall func, bool discardBeforeConnected)
 {
   if (buffer == nullptr)
     return false;
 
-  if(discardBeforeConnected && is_connected_ == false){
-      callLog(AicCommuLogLevels::INFO,"%s","discard send request before connected");
-      return false; //连接成功前丢充掉所有请求
-  }
+  // if(discardBeforeConnected && is_connected_ == false){
+  //     callLog(AicCommuLogLevels::INFO,"%s","discard send request before connected");
+  //     return false; //连接成功前丢充掉所有请求
+  // }
 
   bool is_empty = false;
   {
