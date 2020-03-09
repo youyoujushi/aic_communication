@@ -145,5 +145,13 @@ notice: *_json and *_json is a pair,*_proto and *_proto is a pair,you can't run 
  * add param to send function，it will discard send packet when connect with server hasn't build。
 
 
+#### 1.1.8 version   
+
+* fix bugs:
+ * fix transform problem between net byte order and local byte order
+ * fix crack caused by subscribe socket callback
+
+
+
 
 Copyright (c) 2018, AicRobo.  All rights reserved.

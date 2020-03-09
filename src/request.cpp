@@ -214,10 +214,9 @@ void AicCommuRequest::printPackWrapper(bool is_send, bytes_ptr pack, int thread_
     int identity_len = GET_INT(p);
     std::string identity(p,identity_len);
     OFFSET(p,identity_len);
-    OFFSET(p,4);
     int pack_id = GET_INT(p);
-    OFFSET(p,4);
     long long timestamp = GET_LONGLONG(p);
+    timestamp = htonll(timestamp);
 
     std::string msg = stringFormat(
         "[tid:%d] pack_id:%u, identity:%s, time:%s",

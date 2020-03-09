@@ -8,7 +8,7 @@
 #include <atomic>
 #include <chrono>
 #include "waiter.h"
-#include "packet.h"
+#include "packet.hpp"
 
 namespace aicrobot
 {
@@ -119,7 +119,8 @@ protected:
     SET_INT(p,4);
     SET_INT(p,seq_id);
     SET_INT(p,8);
-    SET_LONGLONG(p,getTimestampNow());
+
+    SET_LONGLONG(p, htonll(getTimestampNow()) );
     SET_INT(p,4);
     SET_BYTES(p,buffer->data(),buffer->size());
     return pack;

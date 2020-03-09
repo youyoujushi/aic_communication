@@ -2,6 +2,7 @@
 #include "utility.h"
 #include <thread>
 
+
 namespace aicrobot
 {
 
@@ -13,6 +14,7 @@ AicCommuReply::AicCommuReply(const std::string &url,
 {
   AicCommuBase::url_ = url;
   AicCommuBase::identity_ = identity;
+
 }
 
 AicCommuReply::~AicCommuReply()
@@ -109,20 +111,24 @@ void AicCommuReply::printPackWrapper(bool is_send, bytes_ptr pack, int thread_id
 {
   if (print_pack_call != nullptr)
   {
+    printf("begin print pack\n");
     char* p = pack->data();
     int total_size  = GET_INT(p);
     int header_size = GET_INT(p);
+    printf("total size:%d,header_size:%d\n",total_size,header_size);
     p = pack->data();
     bytes_ptr data = std::make_shared<bytes_vec>(p+header_size , p+total_size);
     OFFSET(p,8);
     int identity_len = GET_INT(p);
+    printf("identity_len:%d\n",identity_len);
     std::string identity(p,identity_len);
+    printf("identity:%s\n",identity.c_str());
     OFFSET(p,identity_len);
-    OFFSET(p,4);
     int pack_id = GET_INT(p);
-    OFFSET(p,4);
+    printf("pack_id:%d\n",pack_id);
     long long timestamp = GET_LONGLONG(p);
-
+    timestamp = htonll(timestamp);
+printf("timestamp:%lld\n",timestamp);
     std::string msg = stringFormat(
         "[tid:%d] pack_id:%u, identity:%s, time:%s",
         thread_id,

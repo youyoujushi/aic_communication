@@ -28,4 +28,4 @@ target_link_libraries(
 install(TARGETS aic_commu DESTINATION /usr/lib)
 install(FILES ${PROJECT_SOURCE_DIR}/aic_commu.h DESTINATION /usr/include)
 
-endif()
+endif() 

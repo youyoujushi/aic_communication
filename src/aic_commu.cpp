@@ -9,7 +9,7 @@
 namespace aicrobot
 {
 
-std::string aic_commu_lib_version = "1.1.7";
+std::string aic_commu_lib_version = "1.1.8";
 
 std::shared_ptr<AicCommuInterface> AicCommuFactory::newSocket(
     AicCommuType type,
